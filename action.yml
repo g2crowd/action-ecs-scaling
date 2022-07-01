@@ -1,0 +1,39 @@
+name: ECS Scaling GitHub Action
+description: This is a github actions to scale ECS service
+
+author: Saurabh Jambhule
+
+branding:
+  color: green
+  icon: activity
+
+inputs:
+  account:
+    description: AWS account id where ECS service is running
+    required: true
+  role:
+    description: IAM role to assume for performing scaling
+    default: "buildmaster_role"
+  region:
+    description: AWS region
+    default: "us-east-1"
+  cluster:
+    description: ECS cluster name
+    required: true
+  service:
+    description: ECS service name
+    required: true
+  count:
+    description: Number of ECS tasks to keep running
+    required: true
+
+runs:
+  using: docker
+  image: Dockerfile
+  args:
+    - ${{ inputs.account }}
+    - ${{ inputs.role }}
+    - ${{ inputs.region }}
+    - ${{ inputs.cluster }}
+    - ${{ inputs.service }}
+    - ${{ inputs.count }}
